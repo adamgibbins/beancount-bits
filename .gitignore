@@ -87,3 +87,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Editors
+/.idea/
+.*.sw[a-z]
