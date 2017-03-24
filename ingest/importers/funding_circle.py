@@ -13,7 +13,7 @@ from beancount.core import data, flags
 from beancount.core.number import D
 from beancount.utils.date_utils import parse_date_liberally
 
-__author__ = 'Adam Gibbins <adam@admagibbins.com>'
+__author__ = 'Adam Gibbins <adam@adamgibbins.com>'
 __license__ = 'MIT'
 
 
