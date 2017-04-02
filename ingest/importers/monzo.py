@@ -15,7 +15,7 @@ from beancount.core import data, flags
 from beancount.core.number import D
 from beancount.utils.date_utils import parse_date_liberally
 
-__author__ = 'Adam Gibbins <adam@adamgibbins.com'
+__author__ = 'Adam Gibbins <adam@adamgibbins.com>'
 __license__ = 'MIT'
 
 
@@ -94,6 +94,13 @@ class Importer(importer.ImporterProtocol):
             if transaction['notes'] == 'PIN change':
                 entries.append(
                     data.Note(meta, parse_date_liberally(transaction['created']), self.account, 'PIN Change')
+                )
+                continue
+
+            if 'decline_reason' in transaction:
+                note = "%s transaction declined with reason %s" % (get_payee(transaction), transaction['decline_reason'])
+                entries.append(
+                    data.Note(meta, parse_date_liberally(transaction['created']), self.account, note)
                 )
                 continue
 
