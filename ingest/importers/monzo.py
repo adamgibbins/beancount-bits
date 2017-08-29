@@ -122,7 +122,7 @@ class Importer(importer.ImporterProtocol):
             # Flag is WARNING as we're guessing to the origin of the transfer - needs manual confirmation
             postings.append(data.Posting(second_account, None, None, None, flags.FLAG_WARNING, None))
 
-            entries.append(data.Transaction(meta, date, flags.FLAG_OKAY, payee, narration, None, None, postings))
+            entries.append(data.Transaction(meta, date, flags.FLAG_OKAY, payee, narration, set(), set(), postings))
 
             if (count % 10 == 0) or (count == total_count and last_balance_line < 5):
                 last_balance_line = count

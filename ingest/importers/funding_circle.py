@@ -91,7 +91,7 @@ class Importer(importer.ImporterProtocol):
             if loan_id:
                 link = {'loan_' + loan_id}
             else:
-                link = None
+                link = set()
 
             if desc != narration:
                 metadata = {'description': desc}
@@ -105,7 +105,7 @@ class Importer(importer.ImporterProtocol):
                 data.Posting(second_account, None, None, None, None, None)
             ]
 
-            entries.append(data.Transaction(meta, date, flag, payee, narration, None, link, postings))
+            entries.append(data.Transaction(meta, date, flag, payee, narration, set(), link, postings))
 
         return entries
 
