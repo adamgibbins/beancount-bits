@@ -56,7 +56,7 @@ class Importer(importer.ImporterProtocol):
             desc = row['Loan part detail']
             narration = desc
 
-            if txn_type == 'Loan part fund' or txn_type == 'Capital repayment' or txn_type == 'Loan part sale':
+            if txn_type == 'Loan part fund' or txn_type.lower() == 'capital repayment' or txn_type == 'Loan part sale':
                 second_account = self.loan_account
 
             elif txn_type == 'Deposit' or txn_type == 'Withdrawal':
