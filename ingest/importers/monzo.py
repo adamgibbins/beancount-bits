@@ -55,7 +55,8 @@ def get_narration(transaction):
 
 
 class Importer(importer.ImporterProtocol):
-    def __init__(self, account, default_transfer_account):
+    def __init__(self, account_id, account, default_transfer_account):
+        self.account_id = account_id
         self.account = account
         self.default_transfer_account = default_transfer_account
 
@@ -69,7 +70,7 @@ class Importer(importer.ImporterProtocol):
             account_id = transactions[0]['account_id']
 
             if account_id:
-                return re.match('^acc_', account_id)
+                return account_id == self.account_id
 
     def extract(self, file):
         entries = []
