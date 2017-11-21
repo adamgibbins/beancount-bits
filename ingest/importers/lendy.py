@@ -70,11 +70,13 @@ class Importer(importer.ImporterProtocol):
                 second_account = 'Unknown'
                 flag = flags.FLAG_WARNING
 
+            link = set()
             loan_part_id = row['Loan part ID']
             if loan_part_id:
-                link = {'loan_' + loan_part_id}
-            else:
-                link = set()
+                link.add(('loan_part_' + loan_part_id))
+            loan_id = row['Loan ID']
+            if loan_id:
+                link.add(('loan_' + loan_id))
 
             postings = [
                 data.Posting(self.cash_account, data.Amount(D(row['Txn Amount']), 'GBP'), None, None, None, None),
