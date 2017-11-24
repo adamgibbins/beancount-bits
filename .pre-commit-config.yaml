@@ -1,0 +1,15 @@
+---
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  sha: v1.1.1
+  hooks:
+    - id: check-added-large-files
+    - id: check-byte-order-marker
+    - id: check-case-conflict
+    - id: check-docstring-first
+    - id: check-merge-conflict
+    - id: end-of-file-fixer
+    - id: flake8
+    - id: mixed-line-ending
+      args: [--fix=lf]
+    - id: trailing-whitespace
