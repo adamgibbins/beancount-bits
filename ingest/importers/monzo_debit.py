@@ -53,6 +53,8 @@ def get_payee(transaction):
 def get_narration(transaction):
     if transaction['notes'] != '':
         return transaction['notes']
+    elif transaction['scheme'] == 'uk_retail_pot':
+        return 'Internal pot transfer'
     elif get_payee(transaction) is None:
         return transaction['description']
 
@@ -120,12 +122,19 @@ class Importer(importer.ImporterProtocol):
             unit = data.Amount(D(transaction['amount']) / 100, transaction['currency'])
             postings.append(data.Posting(self.account, unit, None, price, None, None))
 
+            # Default to warning as requires human review/categorisation
+            flag = flags.FLAG_WARNING
             second_account = 'Expenses:Unknown'
+            link = set()
 
-            # Flag is WARNING as we're guessing to the origin of the transfer - needs manual confirmation
-            postings.append(data.Posting(second_account, None, None, None, flags.FLAG_WARNING, None))
+            if transaction['scheme'] == 'uk_retail_pot':
+                second_account = self.account
+                flag = None
+                link = {transaction['metadata']['pot_id']}
 
-            entries.append(data.Transaction(meta, date, flags.FLAG_OKAY, payee, narration, set(), set(), postings))
+            postings.append(data.Posting(second_account, None, None, None, flag, None))
+
+            entries.append(data.Transaction(meta, date, flags.FLAG_OKAY, payee, narration, set(), link, postings))
 
         return entries
 
