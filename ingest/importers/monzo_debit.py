@@ -22,7 +22,7 @@ def get_transactions(file):
     if not re.match('.*\.json', path.basename(file.name)):
         return False
 
-    with open(file.name) as data_file:
+    with open(file.name, encoding="utf-8") as data_file:
         return json.load(data_file)['transactions']
 
 
